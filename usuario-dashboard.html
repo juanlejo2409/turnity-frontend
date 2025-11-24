@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Turnity - Panel de usuario</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, #1d4ed8 0, transparent 55%),
+                  radial-gradient(circle at bottom right, #06b6d4 0, transparent 55%), #020617;
+      color: #e5e7eb;
+      padding: 24px;
+    }
+    .layout { max-width: 1100px; margin: 0 auto; }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      border: 2px solid #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 30% 30%, #38bdf8, #0f172a);
+      font-weight: 700;
+      color: #e0f2fe;
+      font-size: 16px;
+    }
+    .logo span { font-weight: 600; }
+
+    .user-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #9ca3af;
+    }
+    .logout-btn {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    h1 { font-size: 26px; margin-bottom: 4px; }
+    .subtitle { color: #9ca3af; font-size: 14px; margin-bottom: 24px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 2fr 1.4fr;
+      gap: 20px;
+    }
+    .card {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.8);
+    }
+    .card h2 { font-size: 18px; margin-bottom: 10px; }
+    .card small { color: #9ca3af; }
+
+    .slot-row {
+      display: flex; gap: 8px; margin: 12px 0 8px;
+      flex-wrap: wrap;
+    }
+    .slot {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      font-size: 13px;
+      cursor: pointer;
+      color: #e5e7eb;
+      background: #020617;
+    }
+    .slot.active {
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      border-color: transparent;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.7);
+    }
+
+    .btn-primary {
+      margin-top: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      color: #fff; font-size: 14px; font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(37, 99, 235, 0.8);
+    }
+
+    .list { margin-top: 8px; font-size: 13px; }
+    .list-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #020617;
+      margin-bottom: 6px;
+      border: 1px solid #111827;
+    }
+    .list-item span.service { font-weight: 500; }
+    .badge {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(34,197,94,0.2);
+      color: #6ee7b7;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <header>
+      <div class="logo">
+        <div class="logo-mark">T</div>
+        <span>Turnity</span>
+      </div>
+      <div class="user-actions">
+        <span id="userNameTop">Bienvenido</span>
+        <button class="logout-btn" id="logoutBtn">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <h1 id="mainTitle">Hola 👋</h1>
+    <p class="subtitle">Reserva y controla tus turnos desde un solo lugar.</p>
+
+    <div class="grid">
+      <!-- Reservar turno -->
+      <div class="card">
+        <h2>Reservar nuevo turno</h2>
+        <small>Elige el negocio, la fecha y la hora disponible.</small>
+
+        <div style="margin-top:12px;">
+          <label style="font-size:13px;">Negocio</label>
+          <select style="width:100%; margin-top:4px; padding:8px 10px; border-radius:999px; border:1px solid #374151; background:#020617; color:#e5e7eb; font-size:13px;">
+            <option>Barbería Centro</option>
+            <option>Spa Relax</option>
+            <option>Clínica OdontoPlus</option>
+          </select>
+        </div>
+
+        <div style="margin-top:10px;">
+          <label style="font-size:13px;">Fecha</label>
+          <input type="date" style="margin-top:4px; width:100%; padding:8px 10px; border-radius:999px; border:1px solid #374151; background:#020617; color:#e5e7eb; font-size:13px;">
+        </div>
+
+        <div style="margin-top:10px;">
+          <label style="font-size:13px;">Horarios disponibles</label>
+          <div class="slot-row">
+            <div class="slot active">09:30</div>
+            <div class="slot">10:00</div>
+            <div class="slot">10:30</div>
+            <div class="slot">11:00</div>
+            <div class="slot">11:30</div>
+          </div>
+        </div>
+
+        <button class="btn-primary">Confirmar reserva</button>
+      </div>
+
+      <!-- Próximos turnos -->
+      <div class="card">
+        <h2>Próximos turnos</h2>
+        <small>Estos son tus turnos agendados.</small>
+
+        <div class="list">
+          <div class="list-item">
+            <div>
+              <span class="service">Barbería Centro</span><br />
+              <span style="color:#9ca3af;">Mañana · 10:00 a. m.</span>
+            </div>
+            <span class="badge">Confirmado</span>
+          </div>
+
+          <div class="list-item">
+            <div>
+              <span class="service">Spa Relax</span><br />
+              <span style="color:#9ca3af;">Sábado · 4:30 p. m.</span>
+            </div>
+            <span class="badge" style="background:rgba(56,189,248,0.15);color:#7dd3fc;">Pendiente</span>
+          </div>
+
+          <div class="list-item">
+            <div>
+              <span class="service">Clínica OdontoPlus</span><br />
+              <span style="color:#9ca3af;">15 de dic · 8:00 a. m.</span>
+            </div>
+            <span class="badge" style="background:rgba(234,179,8,0.18);color:#fde68a;">Recordatorio</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Leer datos del login/registro
+    const name = localStorage.getItem("turnity_user_name");
+    const role = localStorage.getItem("turnity_user_role");
+    const token = localStorage.getItem("turnity_token");
+
+    // Si no hay token, mandar al login
+    if (!token || !role) {
+      window.location.href = "login.html";
+    } else if (role === "negocio") {
+      // Si es negocio, redirigir a su panel
+      window.location.href = "negocio-dashboard.html";
+    }
+
+    if (name) {
+      document.getElementById("userNameTop").textContent = name;
+      document.getElementById("mainTitle").textContent = `Hola, ${name} 👋`;
+    }
+
+    // Cerrar sesión
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("turnity_token");
+      localStorage.removeItem("turnity_user_role");
+      localStorage.removeItem("turnity_user_name");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>
