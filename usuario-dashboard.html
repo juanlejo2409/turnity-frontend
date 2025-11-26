@@ -5,27 +5,49 @@
   <title>Turnity - Panel de usuario</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
     body {
       min-height: 100vh;
-      background: radial-gradient(circle at top left, #1d4ed8 0, transparent 55%),
-                  radial-gradient(circle at bottom right, #06b6d4 0, transparent 55%), #020617;
+      background:
+        radial-gradient(circle at top left, #1d4ed8 0, transparent 55%),
+        radial-gradient(circle at bottom right, #06b6d4 0, transparent 55%),
+        #020617;
       color: #e5e7eb;
-      padding: 24px;
     }
-    .layout { max-width: 1100px; margin: 0 auto; }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
+    /* ===== TOPBAR ===== */
+    .topbar {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.96);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
+
+    .topbar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
     .logo {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
+
     .logo-mark {
       width: 28px;
       height: 28px;
@@ -38,16 +60,140 @@
       font-weight: 700;
       color: #e0f2fe;
       font-size: 16px;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.7);
     }
-    .logo span { font-weight: 600; }
 
-    .user-actions {
+    .logo span {
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .topbar-center {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      padding: 4px;
+      border-radius: 999px;
+      background: #020617;
+      border: 1px solid #1f2937;
+    }
+
+    .nav-link {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link:hover {
+      opacity: 1;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .nav-link.active {
+      opacity: 1;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.7);
+    }
+
+    /* Idiomas */
+    .lang-switch {
+      display: flex;
+      gap: 4px;
+      padding: 3px;
+      border-radius: 999px;
+      background: #020617;
+      border: 1px solid #4b5563;
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 11px;
+      padding: 4px 6px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .lang-btn:hover {
+      opacity: 1;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .lang-btn.active {
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+      opacity: 1;
+    }
+
+    .flag-icon {
+      width: 16px;
+      height: 11px;
+      border-radius: 3px;
+      object-fit: cover;
+    }
+
+    .topbar-right {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 14px;
+      font-size: 13px;
       color: #9ca3af;
     }
+
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid #4b5563;
+    }
+
+    .user-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #38bdf8, #0f172a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #e0f2fe;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+    }
+
+    .user-name-main {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e5e7eb;
+      max-width: 170px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
     .logout-btn {
       padding: 6px 12px;
       border-radius: 999px;
@@ -56,16 +202,37 @@
       color: #e5e7eb;
       font-size: 13px;
       cursor: pointer;
+      white-space: nowrap;
     }
 
-    h1 { font-size: 26px; margin-bottom: 4px; }
-    .subtitle { color: #9ca3af; font-size: 14px; margin-bottom: 24px; }
+    /* ===== CONTENIDO PRINCIPAL ===== */
+    .layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .page-header {
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      color: #9ca3af;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
 
     .grid {
       display: grid;
       grid-template-columns: 2fr 1.4fr;
       gap: 20px;
     }
+
     .card {
       background: rgba(15, 23, 42, 0.96);
       border-radius: 18px;
@@ -73,13 +240,44 @@
       border: 1px solid rgba(148, 163, 184, 0.4);
       box-shadow: 0 18px 40px rgba(15, 23, 42, 0.8);
     }
-    .card h2 { font-size: 18px; margin-bottom: 10px; }
-    .card small { color: #9ca3af; }
+
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .card small {
+      color: #9ca3af;
+    }
+
+    /* Campos formularios */
+    .field-block {
+      margin-top: 12px;
+    }
+
+    .field-block label {
+      font-size: 13px;
+    }
+
+    .field-block select,
+    .field-block input[type="date"] {
+      margin-top: 4px;
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 13px;
+    }
 
     .slot-row {
-      display: flex; gap: 8px; margin: 12px 0 8px;
+      display: flex;
+      gap: 8px;
+      margin: 12px 0 8px;
       flex-wrap: wrap;
     }
+
     .slot {
       padding: 6px 10px;
       border-radius: 999px;
@@ -89,6 +287,7 @@
       color: #e5e7eb;
       background: #020617;
     }
+
     .slot.active {
       background: linear-gradient(135deg, #38bdf8, #6366f1);
       border-color: transparent;
@@ -101,69 +300,166 @@
       border-radius: 999px;
       border: none;
       background: linear-gradient(135deg, #38bdf8, #6366f1);
-      color: #fff; font-size: 14px; font-weight: 500;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
       cursor: pointer;
       box-shadow: 0 10px 26px rgba(37, 99, 235, 0.8);
     }
 
-    .list { margin-top: 8px; font-size: 13px; }
+    .list {
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
     .list-item {
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 8px 10px;
       border-radius: 10px;
       background: #020617;
       margin-bottom: 6px;
       border: 1px solid #111827;
     }
-    .list-item span.service { font-weight: 500; }
+
+    .list-item span.service {
+      font-weight: 500;
+    }
+
     .badge {
       font-size: 11px;
       padding: 3px 8px;
       border-radius: 999px;
-      background: rgba(34,197,94,0.2);
+      background: rgba(34, 197, 94, 0.2);
       color: #6ee7b7;
+    }
+
+    @media (max-width: 900px) {
+      .topbar-inner {
+        flex-wrap: wrap;
+      }
+      .topbar-center {
+        order: 3;
+      }
+      .layout {
+        padding: 16px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="layout">
-    <header>
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-inner">
       <div class="logo">
         <div class="logo-mark">T</div>
         <span>Turnity</span>
       </div>
-      <div class="user-actions">
-        <span id="userNameTop">Bienvenido</span>
-        <button class="logout-btn" id="logoutBtn">Cerrar sesión</button>
-      </div>
-    </header>
 
-    <h1 id="mainTitle">Hola 👋</h1>
-    <p class="subtitle">Reserva y controla tus turnos desde un solo lugar.</p>
+      <div class="topbar-center">
+        <!-- Nav usuario -->
+        <div class="nav-links">
+          <button class="nav-link active" data-section="home" data-i18n="nav_home">Inicio</button>
+          <button class="nav-link" data-section="turns" data-i18n="nav_turns">Mis turnos</button>
+        </div>
+
+        <!-- Idiomas -->
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="es">
+            <img class="flag-icon" src="./flags/es.png" alt="ES" />
+            <span>ES</span>
+          </button>
+          <button class="lang-btn" data-lang="en">
+            <img class="flag-icon" src="./flags/us.png" alt="EN" />
+            <span>EN</span>
+          </button>
+          <button class="lang-btn" data-lang="pt">
+            <img class="flag-icon" src="./flags/br.png" alt="PT" />
+            <span>PT</span>
+          </button>
+          <button class="lang-btn" data-lang="fr">
+            <img class="flag-icon" src="./flags/fr.png" alt="FR" />
+            <span>FR</span>
+          </button>
+          <button class="lang-btn" data-lang="de">
+            <img class="flag-icon" src="./flags/de.png" alt="DE" />
+            <span>DE</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="user-chip">
+          <div class="user-avatar" id="userAvatar">U</div>
+          <div>
+            <div class="user-name-main" id="userNameTop">Usuario</div>
+          </div>
+        </div>
+        <button class="logout-btn" id="logoutBtn" data-i18n="btn_logout">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO -->
+  <div class="layout">
+    <div class="page-header">
+      <h1 id="mainTitle">Hola 👋</h1>
+      <p class="subtitle" data-i18n="subtitle">
+        Reserva y controla tus turnos desde un solo lugar.
+      </p>
+    </div>
 
     <div class="grid">
       <!-- Reservar turno -->
       <div class="card">
         <h2>Reservar nuevo turno</h2>
-        <small>Elige el negocio, la fecha y la hora disponible.</small>
+        <small>Elige el país, la ciudad, el barrio y el negocio.</small>
 
-        <div style="margin-top:12px;">
-          <label style="font-size:13px;">Negocio</label>
-          <select style="width:100%; margin-top:4px; padding:8px 10px; border-radius:999px; border:1px solid #374151; background:#020617; color:#e5e7eb; font-size:13px;">
-            <option>Barbería Centro</option>
-            <option>Spa Relax</option>
-            <option>Clínica OdontoPlus</option>
+        <!-- País (siempre visible, se puede cambiar) -->
+        <div class="field-block">
+          <label>País</label>
+          <select id="countrySelect">
+            <option value="CO">Colombia</option>
+            <option value="MX">México</option>
+            <option value="CL">Chile</option>
+            <option value="ES">España</option>
+            <option value="US">Estados Unidos</option>
           </select>
         </div>
 
-        <div style="margin-top:10px;">
-          <label style="font-size:13px;">Fecha</label>
-          <input type="date" style="margin-top:4px; width:100%; padding:8px 10px; border-radius:999px; border:1px solid #374151; background:#020617; color:#e5e7eb; font-size:13px;">
+        <!-- Ciudad (solo se muestra si hay ciudades en la BD para ese país) -->
+        <div class="field-block" id="cityField" style="display:none;">
+          <label>Ciudad</label>
+          <select id="citySelect"></select>
         </div>
 
-        <div style="margin-top:10px;">
-          <label style="font-size:13px;">Horarios disponibles</label>
-          <div class="slot-row">
+        <!-- Barrio (solo se muestra si hay barrios para la ciudad seleccionada) -->
+        <div class="field-block" id="neighborhoodField" style="display:none;">
+          <label>Barrio</label>
+          <select id="neighborhoodSelect"></select>
+        </div>
+
+        <!-- Negocio: se rellena con los negocios filtrados -->
+        <div class="field-block">
+          <label>Negocio</label>
+          <select id="businessSelect">
+            <option value="">Cargando negocios...</option>
+          </select>
+        </div>
+
+        <!-- Fecha y horarios -->
+        <div class="field-block">
+          <label>Fecha</label>
+          <input type="date" id="dateInput" />
+        </div>
+
+        <div class="field-block">
+          <label>Horarios disponibles</label>
+          <div class="slot-row" id="slotRow">
             <div class="slot active">09:30</div>
             <div class="slot">10:00</div>
             <div class="slot">10:30</div>
@@ -172,61 +468,53 @@
           </div>
         </div>
 
-        <button class="btn-primary">Confirmar reserva</button>
+        <button class="btn-primary" id="confirmBtn">Confirmar reserva</button>
       </div>
 
       <!-- Próximos turnos -->
-      <div class="card">
+      <div class="card" id="upcomingCard">
         <h2>Próximos turnos</h2>
         <small>Estos son tus turnos agendados.</small>
 
-        <div class="list">
-          <div class="list-item">
-            <div>
-              <span class="service">Barbería Centro</span><br />
-              <span style="color:#9ca3af;">Mañana · 10:00 a. m.</span>
-            </div>
-            <span class="badge">Confirmado</span>
-          </div>
-
-          <div class="list-item">
-            <div>
-              <span class="service">Spa Relax</span><br />
-              <span style="color:#9ca3af;">Sábado · 4:30 p. m.</span>
-            </div>
-            <span class="badge" style="background:rgba(56,189,248,0.15);color:#7dd3fc;">Pendiente</span>
-          </div>
-
-          <div class="list-item">
-            <div>
-              <span class="service">Clínica OdontoPlus</span><br />
-              <span style="color:#9ca3af;">15 de dic · 8:00 a. m.</span>
-            </div>
-            <span class="badge" style="background:rgba(234,179,8,0.18);color:#fde68a;">Recordatorio</span>
-          </div>
+        <div class="list" id="upcomingList">
+          <p id="noUpcomingText" style="font-size:13px;color:#9ca3af;">
+            No tienes turnos agendados aún.
+          </p>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    // Leer datos del login/registro
+    // ========= CONFIG API =========
+    const API_BASE = "https://turnity-backend.onrender.com";
+
+    // ========= SESIÓN =========
     const name = localStorage.getItem("turnity_user_name");
     const role = localStorage.getItem("turnity_user_role");
     const token = localStorage.getItem("turnity_token");
+    const storedCountry = localStorage.getItem("turnity_country"); // guardado en el registro
 
-    // Si no hay token, mandar al login
+    // Si no hay token o rol, mandar al login
     if (!token || !role) {
       window.location.href = "login.html";
     } else if (role === "negocio") {
-      // Si es negocio, redirigir a su panel
       window.location.href = "negocio-dashboard.html";
     }
 
+    const userNameTop = document.getElementById("userNameTop");
+    const userAvatar = document.getElementById("userAvatar");
+    const mainTitle = document.getElementById("mainTitle");
+
     if (name) {
-      document.getElementById("userNameTop").textContent = name;
-      document.getElementById("mainTitle").textContent = `Hola, ${name} 👋`;
+      userNameTop.textContent = name;
+      mainTitle.textContent = `Hola, ${name} 👋`;
+      const initial = name.trim().charAt(0).toUpperCase() || "U";
+      userAvatar.textContent = initial;
     }
+
+    // ID único de usuario para guardar reservas
+    const userKey = localStorage.getItem("turnity_user_id") || name || "guest";
 
     // Cerrar sesión
     document.getElementById("logoutBtn").addEventListener("click", () => {
@@ -235,6 +523,394 @@
       localStorage.removeItem("turnity_user_name");
       window.location.href = "login.html";
     });
+
+    // ========= TRADUCCIONES (top y subtítulo) =========
+    const translations = {
+      es: {
+        nav_home: "Inicio",
+        nav_turns: "Mis turnos",
+        btn_logout: "Cerrar sesión",
+        subtitle: "Reserva y controla tus turnos desde un solo lugar.",
+      },
+      en: {
+        nav_home: "Home",
+        nav_turns: "My appointments",
+        btn_logout: "Log out",
+        subtitle: "Book and manage your appointments in one place.",
+      },
+      pt: {
+        nav_home: "Início",
+        nav_turns: "Meus horários",
+        btn_logout: "Sair",
+        subtitle: "Agende e gerencie seus horários em um só lugar.",
+      },
+      fr: {
+        nav_home: "Accueil",
+        nav_turns: "Mes rendez-vous",
+        btn_logout: "Se déconnecter",
+        subtitle: "Réservez et gérez vos rendez-vous au même endroit.",
+      },
+      de: {
+        nav_home: "Start",
+        nav_turns: "Meine Termine",
+        btn_logout: "Abmelden",
+        subtitle: "Buche und verwalte deine Termine an einem Ort.",
+      },
+    };
+
+    let currentLang = "es";
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      const t = translations[lang] || translations.es;
+
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.dataset.i18n;
+        if (t[key]) el.textContent = t[key];
+      });
+    }
+
+    // Idiomas
+    const langButtons = document.querySelectorAll(".lang-btn");
+    langButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        langButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        applyLanguage(btn.dataset.lang);
+      });
+    });
+
+    applyLanguage("es");
+
+    // ========= NAV scroll =========
+    const navLinks = document.querySelectorAll(".nav-link");
+    const upcomingCard = document.getElementById("upcomingCard");
+
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.forEach((l) => l.classList.remove("active"));
+        link.classList.add("active");
+
+        const section = link.dataset.section;
+        if (section === "home") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else if (section === "turns") {
+          if (upcomingCard) {
+            const rect = upcomingCard.getBoundingClientRect();
+            const offsetTop = window.scrollY + rect.top - 80;
+            window.scrollTo({ top: offsetTop, behavior: "smooth" });
+          }
+        }
+      });
+    });
+
+    // ========= FILTROS PAÍS / CIUDAD / BARRIO / NEGOCIO =========
+    const countrySelect = document.getElementById("countrySelect");
+    const cityField = document.getElementById("cityField");
+    const citySelect = document.getElementById("citySelect");
+    const neighborhoodField = document.getElementById("neighborhoodField");
+    const neighborhoodSelect = document.getElementById("neighborhoodSelect");
+    const businessSelect = document.getElementById("businessSelect");
+
+    // Estado en memoria
+    let allBusinessesForCountry = []; // negocios del país seleccionado
+    let selectedCity = "";
+    let selectedNeighborhood = "";
+
+    // País por defecto: el del usuario si existe, si no Colombia
+    const defaultCountry = storedCountry || "CO";
+    countrySelect.value = defaultCountry;
+
+    // Cargar negocios al inicio
+    loadBusinessesForCountry(defaultCountry);
+
+    countrySelect.addEventListener("change", () => {
+      const country = countrySelect.value;
+      loadBusinessesForCountry(country);
+    });
+
+    citySelect.addEventListener("change", () => {
+      selectedCity = citySelect.value;
+      selectedNeighborhood = "";
+      renderNeighborhoodOptions();
+      renderBusinessOptions();
+    });
+
+    neighborhoodSelect.addEventListener("change", () => {
+      selectedNeighborhood = neighborhoodSelect.value;
+      renderBusinessOptions();
+    });
+
+    async function loadBusinessesForCountry(country) {
+      // Reset de selects
+      allBusinessesForCountry = [];
+      selectedCity = "";
+      selectedNeighborhood = "";
+      citySelect.innerHTML = "";
+      neighborhoodSelect.innerHTML = "";
+      businessSelect.innerHTML = '<option value="">Cargando negocios...</option>';
+      cityField.style.display = "none";
+      neighborhoodField.style.display = "none";
+
+      try {
+        const res = await fetch(`${API_BASE}/api/business?country=${encodeURIComponent(country)}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          businessSelect.innerHTML = '<option value="">Error al cargar negocios</option>';
+          return;
+        }
+
+        allBusinessesForCountry = data.businesses || [];
+
+        if (allBusinessesForCountry.length === 0) {
+          businessSelect.innerHTML = '<option value="">No hay negocios en este país aún</option>';
+          return;
+        }
+
+        // Renderizamos ciudades, barrios y negocios
+        renderCityOptions();
+        renderNeighborhoodOptions();
+        renderBusinessOptions();
+      } catch (err) {
+        console.error("Error cargando negocios:", err);
+        businessSelect.innerHTML = '<option value="">No se pudieron cargar los negocios</option>';
+      }
+    }
+
+    function renderCityOptions() {
+      // Sacar ciudades únicas de los negocios
+      const citySet = new Set(
+        allBusinessesForCountry
+          .map((b) => (b.city || "").trim())
+          .filter((c) => c.length > 0)
+      );
+
+      const cities = Array.from(citySet).sort();
+
+      if (cities.length === 0) {
+        cityField.style.display = "none";
+        citySelect.innerHTML = "";
+        selectedCity = "";
+        return;
+      }
+
+      cityField.style.display = "block";
+      citySelect.innerHTML = "";
+      citySelect.appendChild(new Option("Todas las ciudades", "", true, true));
+
+      cities.forEach((c) => {
+        const opt = new Option(c, c);
+        citySelect.appendChild(opt);
+      });
+
+      selectedCity = "";
+    }
+
+    function renderNeighborhoodOptions() {
+      // Negocios filtrados por ciudad (si hay ciudad seleccionada)
+      let filtered = allBusinessesForCountry;
+      if (selectedCity) {
+        filtered = filtered.filter((b) => (b.city || "").trim() === selectedCity);
+      }
+
+      const nSet = new Set(
+        filtered
+          .map((b) => (b.neighborhood || "").trim())
+          .filter((n) => n.length > 0)
+      );
+
+      const neighborhoods = Array.from(nSet).sort();
+
+      if (neighborhoods.length === 0) {
+        neighborhoodField.style.display = "none";
+        neighborhoodSelect.innerHTML = "";
+        selectedNeighborhood = "";
+        return;
+      }
+
+      neighborhoodField.style.display = "block";
+      neighborhoodSelect.innerHTML = "";
+      neighborhoodSelect.appendChild(new Option("Todos los barrios", "", true, true));
+
+      neighborhoods.forEach((n) => {
+        const opt = new Option(n, n);
+        neighborhoodSelect.appendChild(opt);
+      });
+
+      selectedNeighborhood = "";
+    }
+
+    function renderBusinessOptions() {
+      let filtered = allBusinessesForCountry;
+
+      if (selectedCity) {
+        filtered = filtered.filter((b) => (b.city || "").trim() === selectedCity);
+      }
+
+      if (selectedNeighborhood) {
+        filtered = filtered.filter(
+          (b) => (b.neighborhood || "").trim() === selectedNeighborhood
+        );
+      }
+
+      if (filtered.length === 0) {
+        businessSelect.innerHTML =
+          '<option value="">No hay negocios con esos filtros</option>';
+        return;
+      }
+
+      businessSelect.innerHTML = "";
+      filtered.forEach((b) => {
+        const labelParts = [b.name]; // nombre del negocio registrado
+        if (b.city) labelParts.push(b.city);
+        if (b.neighborhood) labelParts.push(b.neighborhood);
+        const label = labelParts.join(" · ");
+        const opt = new Option(label, b._id);
+        businessSelect.appendChild(opt);
+      });
+    }
+
+    // ========= RESERVAS (LOCALSTORAGE POR USUARIO) =========
+    const dateInput = document.getElementById("dateInput");
+    const slotRow = document.getElementById("slotRow");
+    const confirmBtn = document.getElementById("confirmBtn");
+    const upcomingList = document.getElementById("upcomingList");
+    const noUpcomingText = document.getElementById("noUpcomingText");
+
+    let selectedTime = null;
+
+    // Selección de horario
+    const slotButtons = document.querySelectorAll(".slot");
+    slotButtons.forEach((slot) => {
+      if (slot.classList.contains("active")) {
+        selectedTime = slot.textContent.trim();
+      }
+      slot.addEventListener("click", () => {
+        slotButtons.forEach((s) => s.classList.remove("active"));
+        slot.classList.add("active");
+        selectedTime = slot.textContent.trim();
+      });
+    });
+
+    function loadReservations() {
+      const key = `turnity_reservations_${userKey}`;
+      const raw = localStorage.getItem(key);
+      if (!raw) return [];
+      try {
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (e) {
+        console.error("Error parseando reservas:", e);
+        return [];
+      }
+    }
+
+    function saveReservations(list) {
+      const key = `turnity_reservations_${userKey}`;
+      localStorage.setItem(key, JSON.stringify(list));
+    }
+
+    function renderReservations() {
+      const reservations = loadReservations();
+      upcomingList.innerHTML = "";
+
+      if (reservations.length === 0) {
+        const p = document.createElement("p");
+        p.id = "noUpcomingText";
+        p.style.fontSize = "13px";
+        p.style.color = "#9ca3af";
+        p.textContent = "No tienes turnos agendados aún.";
+        upcomingList.appendChild(p);
+        return;
+      }
+
+      // Ordenar por fecha y hora
+      reservations.sort((a, b) => {
+        const da = (a.date || "") + " " + (a.time || "");
+        const db = (b.date || "") + " " + (b.time || "");
+        return da.localeCompare(db);
+      });
+
+      reservations.forEach((r) => {
+        const item = document.createElement("div");
+        item.className = "list-item";
+
+        const left = document.createElement("div");
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "service";
+        nameSpan.textContent = r.businessLabel || r.businessName || "Negocio";
+
+        const detailSpan = document.createElement("span");
+        detailSpan.style.color = "#9ca3af";
+        detailSpan.style.display = "block";
+        // Fecha simple: YYYY-MM-DD · HH:mm
+        const dText = r.date || "";
+        const tText = r.time || "";
+        detailSpan.textContent = `${dText} · ${tText}`;
+
+        left.appendChild(nameSpan);
+        left.appendChild(document.createElement("br"));
+        left.appendChild(detailSpan);
+
+        const badge = document.createElement("span");
+        badge.className = "badge";
+        badge.textContent = r.status || "Confirmado";
+
+        item.appendChild(left);
+        item.appendChild(badge);
+
+        upcomingList.appendChild(item);
+      });
+    }
+
+    confirmBtn.addEventListener("click", () => {
+      const country = countrySelect.value;
+      const businessId = businessSelect.value;
+      const businessOption = businessSelect.options[businessSelect.selectedIndex];
+      const businessLabel = businessOption ? businessOption.text : "";
+      const businessName = businessOption ? businessOption.text.split(" · ")[0] : "";
+      const date = dateInput.value;
+
+      if (!country) {
+        alert("Por favor selecciona un país.");
+        return;
+      }
+      if (!businessId) {
+        alert("Por favor selecciona un negocio.");
+        return;
+      }
+      if (!date) {
+        alert("Por favor selecciona una fecha.");
+        return;
+      }
+      if (!selectedTime) {
+        alert("Por favor selecciona un horario.");
+        return;
+      }
+
+      const reservations = loadReservations();
+
+      const newReservation = {
+        id: Date.now(),
+        country,
+        businessId,
+        businessName,
+        businessLabel,
+        date,
+        time: selectedTime,
+        status: "Confirmado",
+      };
+
+      reservations.push(newReservation);
+      saveReservations(reservations);
+      renderReservations();
+
+      alert("Tu reserva ha sido confirmada.");
+    });
+
+    // Cargar reservas al inicio
+    renderReservations();
   </script>
 </body>
 </html>

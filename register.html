@@ -351,10 +351,12 @@
           <span class="icon">🏪</span>
           <span data-i18n="role_business">Negocio</span>
         </button>
+        <button type="button" class="role-btn" data-role="trabajador">
+          <span class="icon">🧑‍🔧</span>
+          <span data-i18n="role_worker">Trabajador</span>
+        </button>
       </div>
-      <div class="hint" data-i18n="role_hint">
-        Usuario: reservas turnos. Negocio: gestionas tu agenda y los clientes.
-      </div>
+      <!-- 👇 AQUÍ quitamos el texto explicativo -->
     </div>
 
     <form id="registerForm">
@@ -364,10 +366,19 @@
       <label for="name" data-i18n="name_label">Nombre completo</label>
       <input type="text" id="name" name="name" placeholder="Nombre y apellido" required />
 
-      <!-- Campo negocio envuelto para poder ocultar/mostrar -->
+      <!-- Campo negocio (solo rol negocio) -->
       <div id="business-field">
         <label for="business" data-i18n="business_label">Nombre del negocio</label>
         <input type="text" id="business" name="business" placeholder="Ej. Barbería Centro" />
+      </div>
+
+      <!-- Campo ID negocio (solo rol trabajador) -->
+      <div id="business-id-field" style="display:none;">
+        <label for="businessId" data-i18n="business_id_label">ID del negocio</label>
+        <input type="text" id="businessId" name="businessId" placeholder="Ej: T-AB123" />
+        <p class="hint" data-i18n="business_id_hint">
+          Pídele este código al dueño del negocio. Lo verás en su panel como "ID negocio".
+        </p>
       </div>
 
       <div class="row">
@@ -427,9 +438,11 @@
         role_label: "Estás creando una cuenta como:",
         role_user: "Usuario",
         role_business: "Negocio",
-        role_hint: "Usuario: reservas turnos. Negocio: gestionas tu agenda y los clientes.",
+        role_worker: "Trabajador",
         name_label: "Nombre y apellidos",
         business_label: "Nombre del negocio",
+        business_id_label: "ID del negocio",
+        business_id_hint: "Pídele este código al dueño del negocio. Lo verás en su panel como \"ID negocio\".",
         country_label: "País",
         city_label: "Ciudad",
         neighborhood_label: "Barrio",
@@ -442,6 +455,7 @@
         placeholders: {
           name: "Tu nombre completo",
           business: "Ej: Barbería Centro",
+          businessId: "Ej: T-AB123",
           city: "Ej: Bogotá",
           neighborhood: "Ej: Chapinero",
           email: "tucorreo@ejemplo.com",
@@ -455,9 +469,11 @@
         role_label: "You are creating an account as:",
         role_user: "Customer",
         role_business: "Business",
-        role_hint: "Customer: book appointments. Business: manage your agenda and clients.",
+        role_worker: "Worker",
         name_label: "Full name",
         business_label: "Business name",
+        business_id_label: "Business ID",
+        business_id_hint: "Ask the business owner for this code. They see it as \"Business ID\" in their panel.",
         country_label: "Country",
         city_label: "City",
         neighborhood_label: "Neighborhood",
@@ -470,6 +486,7 @@
         placeholders: {
           name: "Your full name",
           business: "e.g. Downtown Barbershop",
+          businessId: "e.g. T-AB123",
           city: "e.g. Bogotá",
           neighborhood: "e.g. Chapinero",
           email: "you@example.com",
@@ -483,9 +500,11 @@
         role_label: "Você está criando uma conta como:",
         role_user: "Cliente",
         role_business: "Negócio",
-        role_hint: "Cliente: reserva horários. Negócio: gerencia sua agenda e clientes.",
+        role_worker: "Trabalhador",
         name_label: "Nome completo",
         business_label: "Nome do negócio",
+        business_id_label: "ID do negócio",
+        business_id_hint: "Peça este código ao dono do negócio. Ele aparece como \"ID negócio\" no painel.",
         country_label: "País",
         city_label: "Cidade",
         neighborhood_label: "Bairro",
@@ -498,6 +517,7 @@
         placeholders: {
           name: "Seu nome completo",
           business: "Ex: Barbearia Centro",
+          businessId: "Ex: T-AB123",
           city: "Ex: São Paulo",
           neighborhood: "Ex: Centro",
           email: "voce@exemplo.com",
@@ -511,9 +531,11 @@
         role_label: "Vous créez un compte en tant que :",
         role_user: "Client",
         role_business: "Commerce",
-        role_hint: "Client : vous réservez des rendez-vous. Commerce : vous gérez votre agenda et vos clients.",
+        role_worker: "Employé",
         name_label: "Nom complet",
         business_label: "Nom du commerce",
+        business_id_label: "ID du commerce",
+        business_id_hint: "Demandez ce code au propriétaire du commerce. Il apparaît comme « ID du commerce » dans son tableau.",
         country_label: "Pays",
         city_label: "Ville",
         neighborhood_label: "Quartier",
@@ -526,6 +548,7 @@
         placeholders: {
           name: "Votre nom complet",
           business: "Ex : Salon du Centre",
+          businessId: "Ex : T-AB123",
           city: "Ex : Paris",
           neighborhood: "Ex : Centre",
           email: "vous@exemple.com",
@@ -539,9 +562,11 @@
         role_label: "Du erstellst ein Konto als:",
         role_user: "Kunde",
         role_business: "Geschäft",
-        role_hint: "Kunde: du buchst Termine. Geschäft: du verwaltest Agenda und Kunden.",
+        role_worker: "Mitarbeiter",
         name_label: "Vollständiger Name",
         business_label: "Name des Geschäfts",
+        business_id_label: "Geschäfts-ID",
+        business_id_hint: "Bitte den Geschäftsinhaber um diesen Code. Er sieht ihn als „Geschäfts-ID“ im Dashboard.",
         country_label: "Land",
         city_label: "Stadt",
         neighborhood_label: "Stadtteil",
@@ -554,6 +579,7 @@
         placeholders: {
           name: "Dein vollständiger Name",
           business: "z.B. Barbershop Zentrum",
+          businessId: "z.B. T-AB123",
           city: "z.B. Berlin",
           neighborhood: "z.B. Mitte",
           email: "du@example.com",
@@ -577,6 +603,7 @@
       const ph = t.placeholders;
       document.getElementById("name").placeholder = ph.name;
       document.getElementById("business").placeholder = ph.business;
+      document.getElementById("businessId").placeholder = ph.businessId;
       document.getElementById("city").placeholder = ph.city;
       document.getElementById("neighborhood").placeholder = ph.neighborhood;
       document.getElementById("email").placeholder = ph.email;
@@ -594,24 +621,38 @@
       });
     });
 
-    // Botones Usuario / Negocio
+    // Botones Usuario / Negocio / Trabajador
     const roleButtons = document.querySelectorAll(".role-btn");
     const businessField = document.getElementById("business-field");
+    const businessIdField = document.getElementById("business-id-field");
     const roleHidden = document.getElementById("role");
+
+    // Por defecto: usuario -> ocultamos campos de negocio
+    businessField.style.display = "none";
+    businessIdField.style.display = "none";
 
     roleButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
         roleButtons.forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
 
-        currentRole = btn.dataset.role;  // "usuario" o "negocio"
+        currentRole = btn.dataset.role;  // "usuario" | "negocio" | "trabajador"
         roleHidden.value = currentRole;  // sincroniza el input hidden
 
         if (currentRole === "negocio") {
           businessField.style.display = "block";
-        } else {
+          businessIdField.style.display = "none";
+          document.getElementById("businessId").value = "";
+        } else if (currentRole === "trabajador") {
           businessField.style.display = "none";
           document.getElementById("business").value = "";
+          businessIdField.style.display = "block";
+        } else {
+          // usuario normal
+          businessField.style.display = "none";
+          businessIdField.style.display = "none";
+          document.getElementById("business").value = "";
+          document.getElementById("businessId").value = "";
         }
       });
     });
@@ -643,11 +684,21 @@
         return;
       }
 
+      const selectedCountry = document.getElementById("country").value;
+      const businessNameVal = document.getElementById("business").value.trim();
+      const businessIdVal = document.getElementById("businessId").value.trim();
+
+      if (currentRole === "trabajador" && !businessIdVal) {
+        alert("Debes ingresar el ID del negocio al que perteneces.");
+        return;
+      }
+
       const data = {
         role: currentRole,
         name: document.getElementById("name").value.trim(),
-        business: document.getElementById("business").value.trim(),
-        country: document.getElementById("country").value,
+        business: currentRole === "negocio" ? businessNameVal : "",
+        businessId: currentRole === "trabajador" ? businessIdVal : "",
+        country: selectedCountry,
         city: document.getElementById("city").value.trim(),
         neighborhood: document.getElementById("neighborhood").value.trim(),
         email: document.getElementById("email").value.trim(),
@@ -668,14 +719,32 @@
           return;
         }
 
+        // Guardar token y datos básicos
         if (result.token) {
           localStorage.setItem("turnity_token", result.token);
           localStorage.setItem("turnity_user_role", result.user.role);
           localStorage.setItem("turnity_user_name", result.user.name);
+
+          // Guardar businessId y business (si aplica)
+          if (result.user.businessId) {
+            localStorage.setItem("turnity_business_id", result.user.businessId);
+          }
+          if (result.user.business) {
+            localStorage.setItem("turnity_business_name", result.user.business);
+          }
+          if (result.user.country) {
+            localStorage.setItem("turnity_country", result.user.country);
+          } else {
+            localStorage.setItem("turnity_country", selectedCountry);
+          }
         }
 
+        // Redirección según rol
         if (result.user.role === "negocio") {
           window.location.href = "negocio-dashboard.html";
+        } else if (result.user.role === "trabajador") {
+          // luego haremos un panel específico para trabajadores
+          window.location.href = "usuario-dashboard.html";
         } else {
           window.location.href = "usuario-dashboard.html";
         }

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Turnity - Panel de trabajador</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, #1d4ed8 0, transparent 55%),
+        radial-gradient(circle at bottom right, #06b6d4 0, transparent 55%),
+        #020617;
+      color: #e5e7eb;
+    }
+
+    /* ===== TOPBAR ===== */
+    .topbar {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.96);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .topbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      border: 2px solid #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 30% 30%, #38bdf8, #0f172a);
+      font-weight: 700;
+      color: #e0f2fe;
+      font-size: 16px;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.7);
+    }
+
+    .logo span {
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .topbar-center {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      padding: 4px;
+      border-radius: 999px;
+      background: #020617;
+      border: 1px solid #1f2937;
+    }
+
+    .nav-link {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link:hover {
+      opacity: 1;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .nav-link.active {
+      opacity: 1;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.7);
+    }
+
+    /* Idiomas en topbar */
+    .lang-switch {
+      display: flex;
+      gap: 4px;
+      padding: 3px;
+      border-radius: 999px;
+      background: #020617;
+      border: 1px solid #4b5563;
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 11px;
+      padding: 4px 6px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .lang-btn:hover {
+      opacity: 1;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .lang-btn.active {
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+      opacity: 1;
+    }
+
+    .flag-icon {
+      width: 16px;
+      height: 11px;
+      border-radius: 3px;
+      object-fit: cover;
+    }
+
+    /* Lado derecho: usuario */
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .worker-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid #4b5563;
+      box-shadow: 0 0 14px rgba(15, 23, 42, 0.9);
+    }
+
+    .worker-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #38bdf8, #0f172a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #e0f2fe;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+    }
+
+    .worker-name-main {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e5e7eb;
+      max-width: 170px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .worker-role {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .logout-btn {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* ===== LAYOUT PRINCIPAL ===== */
+    .layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      color: #9ca3af;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.7fr 1.3fr;
+      gap: 20px;
+      margin-top: 8px;
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.8);
+    }
+
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .card small {
+      color: #9ca3af;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 8px 6px;
+      text-align: left;
+    }
+
+    thead {
+      background: #020617;
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    tbody tr:nth-child(odd) {
+      background: rgba(15, 23, 42, 0.5);
+    }
+
+    th {
+      color: #9ca3af;
+      border-bottom: 1px solid #111827;
+    }
+
+    .status {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.15);
+      color: #7dd3fc;
+    }
+
+    .btn-primary {
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.8);
+    }
+
+    .btn-secondary {
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .field-label {
+      font-size: 13px;
+      margin-bottom: 4px;
+      color: #cbd5f5;
+    }
+
+    .text-input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      margin-top: 4px;
+      margin-bottom: 10px;
+    }
+
+    .text-input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.7);
+      background: #020713;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-bottom: 10px;
+    }
+
+    .business-id-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #020617;
+      border: 1px solid #4b5563;
+      font-size: 12px;
+      margin-top: 8px;
+      margin-bottom: 10px;
+    }
+
+    .business-name {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .topbar-inner {
+        flex-wrap: wrap;
+      }
+      .topbar-center {
+        order: 3;
+      }
+      .layout {
+        padding: 16px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <div class="logo-mark">T</div>
+        <span>Turnity</span>
+      </div>
+
+      <div class="topbar-center">
+        <!-- Nav principal -->
+        <div class="nav-links">
+          <button class="nav-link active" data-section="agenda" data-i18n="nav_agenda">Agenda</button>
+          <button class="nav-link" data-section="business" data-i18n="nav_business">Mi negocio</button>
+        </div>
+
+        <!-- Idiomas -->
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="es">
+            <img class="flag-icon" src="./flags/es.png" alt="ES" />
+            <span>ES</span>
+          </button>
+          <button class="lang-btn" data-lang="en">
+            <img class="flag-icon" src="./flags/us.png" alt="EN" />
+            <span>EN</span>
+          </button>
+          <button class="lang-btn" data-lang="pt">
+            <img class="flag-icon" src="./flags/br.png" alt="PT" />
+            <span>PT</span>
+          </button>
+          <button class="lang-btn" data-lang="fr">
+            <img class="flag-icon" src="./flags/fr.png" alt="FR" />
+            <span>FR</span>
+          </button>
+          <button class="lang-btn" data-lang="de">
+            <img class="flag-icon" src="./flags/de.png" alt="DE" />
+            <span>DE</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <!-- Chip trabajador -->
+        <div class="worker-chip">
+          <div class="worker-avatar" id="workerAvatar">T</div>
+          <div>
+            <div class="worker-name-main" id="workerNameTop">Nombre trabajador</div>
+            <div class="worker-role" data-i18n="worker_role_label">Trabajador</div>
+          </div>
+        </div>
+
+        <button class="logout-btn" id="logoutBtn" data-i18n="btn_logout">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <h1 id="mainTitle">Panel de trabajador</h1>
+    <p class="subtitle" data-i18n="subtitle">
+      Revisa los turnos que tienes asignados hoy y vincúlate al negocio con el ID que te compartieron.
+    </p>
+
+    <div class="grid">
+      <!-- Agenda / turnos -->
+      <div class="card" id="agendaCard">
+        <h2 data-i18n="turns_title">Mis turnos de hoy</h2>
+        <small data-i18n="turns_hint">Aquí verás los turnos que debes atender.</small>
+
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="col_hour">Hora</th>
+              <th data-i18n="col_client">Cliente</th>
+              <th data-i18n="col_service">Servicio</th>
+              <th data-i18n="col_status">Estado</th>
+            </tr>
+          </thead>
+          <tbody id="turnsBody">
+            <tr>
+              <td colspan="4" style="font-size:12px;color:#9ca3af;padding:12px 6px;"
+                  data-i18n="no_turns">
+                Aún no hay turnos cargados. Aquí verás tus turnos cuando conectemos la base de datos.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Vincular negocio -->
+      <div class="card" id="businessCard">
+        <h2 data-i18n="business_card_title">Mi negocio</h2>
+        <small data-i18n="business_card_hint">
+          Vincúlate al negocio usando el ID que ves en el panel del propietario.
+        </small>
+
+        <!-- Formulario para vincular -->
+        <div id="businessFormBox">
+          <div class="field-label" data-i18n="business_id_label">ID de negocio</div>
+          <input
+            id="businessIdInput"
+            type="text"
+            class="text-input"
+            placeholder="Ej: T-AB123"
+          />
+          <p class="hint" data-i18n="business_hint">
+            Pide al dueño del negocio el ID que aparece en su panel (ej. T-XXXXX) y pégalo aquí.
+          </p>
+          <button type="button" class="btn-primary" id="linkBusinessBtn" data-i18n="btn_link">
+            Vincularme a este negocio
+          </button>
+        </div>
+
+        <!-- Vista cuando ya está vinculado -->
+        <div id="businessLinkedBox" style="display:none;">
+          <p class="field-label" data-i18n="linked_business_label">Negocio vinculado</p>
+          <div class="business-id-pill">
+            <span>🏪</span>
+            <span id="businessIdText">T-XXXXX</span>
+          </div>
+          <p class="hint" id="businessNameText">
+            Aquí pronto verás el nombre y servicios del negocio cuando se conecte con la base de datos.
+          </p>
+
+          <button type="button" class="btn-secondary" id="changeBusinessBtn" data-i18n="btn_change_business">
+            Cambiar de negocio
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==== OBTENER USUARIO ACTUAL DESDE LOCALSTORAGE (turnityUser) ====
+    function getCurrentUser() {
+      const raw = localStorage.getItem("turnityUser");
+      if (raw) {
+        try {
+          return JSON.parse(raw);
+        } catch (e) {
+          console.error("Error parseando turnityUser:", e);
+        }
+      }
+
+      // Fallback formato viejo
+      const name = localStorage.getItem("turnity_user_name");
+      const role = localStorage.getItem("turnity_user_role");
+      const email = localStorage.getItem("turnity_user_email");
+      if (name || role || email) {
+        return {
+          id: null,
+          name: name || "Usuario",
+          role: role || "usuario",
+          email: email || null,
+        };
+      }
+
+      return null;
+    }
+
+    const currentUser = getCurrentUser();
+    const token = localStorage.getItem("turnity_token");
+
+    // Redirección según sesión y rol
+    if (!token || !currentUser || !currentUser.role) {
+      window.location.href = "login.html";
+    } else if (currentUser.role === "negocio") {
+      window.location.href = "negocio-dashboard.html";
+    } else if (currentUser.role === "usuario") {
+      window.location.href = "usuario-dashboard.html";
+    }
+    // Si llegó hasta acá, es trabajador ✅
+
+    // Clave única por trabajador para guardar su negocio vinculado
+    const workerKey = currentUser && (currentUser.id || currentUser._id || currentUser.email)
+      ? (currentUser.id || currentUser._id || currentUser.email)
+      : (currentUser && currentUser.name ? currentUser.name : "guest-worker");
+
+    const workerBusinessIdKey = `turnity_worker_business_id_${workerKey}`;
+    const workerBusinessNameKey = `turnity_worker_business_name_${workerKey}`;
+
+    // ==== PINTAR DATOS DEL TRABAJADOR EN TOPBAR ====
+    const workerAvatar = document.getElementById("workerAvatar");
+    const workerNameTop = document.getElementById("workerNameTop");
+    const mainTitleEl = document.getElementById("mainTitle");
+
+    const displayName = currentUser && currentUser.name ? currentUser.name : "Trabajador";
+    workerNameTop.textContent = displayName;
+    mainTitleEl.textContent = `Panel de ${displayName}`;
+    const initial = displayName.trim().charAt(0).toUpperCase() || "T";
+    workerAvatar.textContent = initial;
+
+    // ==== Cerrar sesión ====
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("turnity_token");
+      localStorage.removeItem("turnity_user_role");
+      localStorage.removeItem("turnity_user_name");
+      localStorage.removeItem("turnity_user_email");
+      localStorage.removeItem("turnityUser");
+      window.location.href = "login.html";
+    });
+
+    // ==== MANEJO DE NEGOCIO VINCULADO (LOCALSTORAGE) ====
+    const businessFormBox = document.getElementById("businessFormBox");
+    const businessLinkedBox = document.getElementById("businessLinkedBox");
+    const businessIdInput = document.getElementById("businessIdInput");
+    const businessIdText = document.getElementById("businessIdText");
+    const businessNameText = document.getElementById("businessNameText");
+    const linkBusinessBtn = document.getElementById("linkBusinessBtn");
+    const changeBusinessBtn = document.getElementById("changeBusinessBtn");
+
+    function showBusinessForm() {
+      businessFormBox.style.display = "block";
+      businessLinkedBox.style.display = "none";
+    }
+
+    function showBusinessLinked(id, name) {
+      businessFormBox.style.display = "none";
+      businessLinkedBox.style.display = "block";
+      businessIdText.textContent = id || "T-XXXXX";
+
+      if (name && name.trim().length > 0) {
+        businessNameText.textContent = name;
+      } else {
+        // Texto genérico por ahora, hasta que lo traigamos de la base
+        businessNameText.textContent =
+          "Negocio vinculado correctamente. Próximamente verás aquí el nombre y servicios reales.";
+      }
+    }
+
+    // Cargar estado inicial
+    (function initBusinessLink() {
+      const storedId = localStorage.getItem(workerBusinessIdKey);
+      const storedName = localStorage.getItem(workerBusinessNameKey);
+
+      if (storedId) {
+        showBusinessLinked(storedId, storedName);
+      } else {
+        showBusinessForm();
+      }
+    })();
+
+    // Vincular negocio
+    linkBusinessBtn.addEventListener("click", () => {
+      const rawId = businessIdInput.value.trim();
+
+      if (!rawId) {
+        alert("Por favor ingresa el ID de negocio.");
+        return;
+      }
+
+      // Validación sencilla: empiece por T- y tenga mínimo 3 caracteres
+      if (!rawId.startsWith("T-") || rawId.length < 3) {
+        alert("El ID de negocio no parece válido. Ejemplo: T-AB123");
+        return;
+      }
+
+      // Guardar en localStorage solo para este trabajador
+      localStorage.setItem(workerBusinessIdKey, rawId);
+
+      // Nombre de negocio por ahora vacío (luego lo podemos llenar desde la base)
+      localStorage.setItem(workerBusinessNameKey, "");
+
+      showBusinessLinked(rawId, "");
+      businessIdInput.value = "";
+    });
+
+    // Cambiar negocio
+    changeBusinessBtn.addEventListener("click", () => {
+      const ok = confirm(
+        "¿Seguro que quieres desvincularte de este negocio? Podrás vincularte a otro con un nuevo ID."
+      );
+      if (!ok) return;
+
+      localStorage.removeItem(workerBusinessIdKey);
+      localStorage.removeItem(workerBusinessNameKey);
+      showBusinessForm();
+    });
+
+    // ==== IDIOMAS ====
+    const translations = {
+      es: {
+        nav_agenda: "Agenda",
+        nav_business: "Mi negocio",
+        btn_logout: "Cerrar sesión",
+        worker_role_label: "Trabajador",
+        subtitle:
+          "Revisa los turnos que tienes asignados hoy y vincúlate al negocio con el ID que te compartieron.",
+        turns_title: "Mis turnos de hoy",
+        turns_hint: "Aquí verás los turnos que debes atender.",
+        col_hour: "Hora",
+        col_client: "Cliente",
+        col_service: "Servicio",
+        col_status: "Estado",
+        no_turns:
+          "Aún no hay turnos cargados. Aquí verás tus turnos cuando conectemos la base de datos.",
+        business_card_title: "Mi negocio",
+        business_card_hint:
+          "Vincúlate al negocio usando el ID que ves en el panel del propietario.",
+        business_id_label: "ID de negocio",
+        business_hint:
+          "Pide al dueño del negocio el ID que aparece en su panel (ej. T-XXXXX) y pégalo aquí.",
+        btn_link: "Vincularme a este negocio",
+        linked_business_label: "Negocio vinculado",
+        btn_change_business: "Cambiar de negocio",
+        placeholders: {
+          businessId: "Ej: T-AB123",
+        },
+      },
+      en: {
+        nav_agenda: "Schedule",
+        nav_business: "My business",
+        btn_logout: "Log out",
+        worker_role_label: "Worker",
+        subtitle:
+          "Review the appointments assigned to you and link to a business using the ID your owner shared.",
+        turns_title: "My appointments today",
+        turns_hint: "Here you will see the appointments you must attend.",
+        col_hour: "Time",
+        col_client: "Client",
+        col_service: "Service",
+        col_status: "Status",
+        no_turns:
+          "No appointments loaded yet. You will see them here once we connect the database.",
+        business_card_title: "My business",
+        business_card_hint:
+          "Link to the business using the ID shown in the owner’s dashboard.",
+        business_id_label: "Business ID",
+        business_hint:
+          "Ask the owner for the business ID (e.g. T-XXXXX) and paste it here.",
+        btn_link: "Link to this business",
+        linked_business_label: "Linked business",
+        btn_change_business: "Change business",
+        placeholders: {
+          businessId: "e.g. T-AB123",
+        },
+      },
+      pt: {
+        nav_agenda: "Agenda",
+        nav_business: "Meu negócio",
+        btn_logout: "Sair",
+        worker_role_label: "Trabalhador",
+        subtitle:
+          "Veja os horários atribuídos a você e vincule-se ao negócio usando o ID que o proprietário compartilhou.",
+        turns_title: "Meus horários de hoje",
+        turns_hint: "Aqui você verá os horários que deve atender.",
+        col_hour: "Hora",
+        col_client: "Cliente",
+        col_service: "Serviço",
+        col_status: "Status",
+        no_turns:
+          "Ainda não há horários carregados. Eles aparecerão aqui quando conectarmos o banco de dados.",
+        business_card_title: "Meu negócio",
+        business_card_hint:
+          "Vincule-se ao negócio usando o ID exibido no painel do proprietário.",
+        business_id_label: "ID do negócio",
+        business_hint:
+          "Peça ao dono o ID do negócio (ex.: T-XXXXX) e cole aqui.",
+        btn_link: "Vincular a este negócio",
+        linked_business_label: "Negócio vinculado",
+        btn_change_business: "Trocar de negócio",
+        placeholders: {
+          businessId: "Ex.: T-AB123",
+        },
+      },
+      fr: {
+        nav_agenda: "Agenda",
+        nav_business: "Mon commerce",
+        btn_logout: "Se déconnecter",
+        worker_role_label: "Employé",
+        subtitle:
+          "Consulte les rendez-vous qui vous sont attribués et reliez-vous au commerce avec l’ID partagé par le propriétaire.",
+        turns_title: "Mes rendez-vous du jour",
+        turns_hint: "Vous verrez ici les rendez-vous que vous devez gérer.",
+        col_hour: "Heure",
+        col_client: "Client",
+        col_service: "Service",
+        col_status: "Statut",
+        no_turns:
+          "Aucun rendez-vous pour le moment. Ils s’afficheront ici lorsque la base sera connectée.",
+        business_card_title: "Mon commerce",
+        business_card_hint:
+          "Reliez-vous au commerce en utilisant l’ID affiché sur le tableau de bord du propriétaire.",
+        business_id_label: "ID du commerce",
+        business_hint:
+          "Demandez au propriétaire l’ID du commerce (ex : T-XXXXX) et collez-le ici.",
+        btn_link: "Me relier à ce commerce",
+        linked_business_label: "Commerce relié",
+        btn_change_business: "Changer de commerce",
+        placeholders: {
+          businessId: "Ex : T-AB123",
+        },
+      },
+      de: {
+        nav_agenda: "Kalender",
+        nav_business: "Mein Geschäft",
+        btn_logout: "Abmelden",
+        worker_role_label: "Mitarbeiter",
+        subtitle:
+          "Sieh dir deine zugewiesenen Termine an und verknüpfe dich mit dem Geschäft über die ID, die dir der Inhaber gegeben hat.",
+        turns_title: "Meine Termine heute",
+        turns_hint: "Hier siehst du die Termine, die du betreuen musst.",
+        col_hour: "Uhrzeit",
+        col_client: "Kunde",
+        col_service: "Service",
+        col_status: "Status",
+        no_turns:
+          "Noch keine Termine geladen. Sie werden hier angezeigt, sobald die Datenbank verbunden ist.",
+        business_card_title: "Mein Geschäft",
+        business_card_hint:
+          "Verknüpfe dich mit dem Geschäft über die ID aus dem Dashboard des Inhabers.",
+        business_id_label: "Geschäfts-ID",
+        business_hint:
+          "Bitte den Inhaber um die Geschäfts-ID (z.B. T-XXXXX) und füge sie hier ein.",
+        btn_link: "Mit diesem Geschäft verknüpfen",
+        linked_business_label: "Verknüpftes Geschäft",
+        btn_change_business: "Geschäft wechseln",
+        placeholders: {
+          businessId: "z.B. T-AB123",
+        },
+      },
+    };
+
+    let currentLang = "es";
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      const t = translations[lang] || translations.es;
+
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.dataset.i18n;
+        if (t[key]) el.textContent = t[key];
+      });
+
+      // placeholders
+      const ph = t.placeholders;
+      if (ph && ph.businessId && businessIdInput) {
+        businessIdInput.placeholder = ph.businessId;
+      }
+    }
+
+    const langButtons = document.querySelectorAll(".lang-btn");
+    langButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        langButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        applyLanguage(btn.dataset.lang);
+      });
+    });
+
+    applyLanguage("es");
+
+    // ==== NAV VISUAL (scroll simple) ====
+    const navLinks = document.querySelectorAll(".nav-link");
+    const agendaCard = document.getElementById("agendaCard");
+    const businessCard = document.getElementById("businessCard");
+
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.forEach((l) => l.classList.remove("active"));
+        link.classList.add("active");
+
+        const section = link.dataset.section;
+        if (section === "agenda" && agendaCard) {
+          const rect = agendaCard.getBoundingClientRect();
+          const offsetTop = window.scrollY + rect.top - 80;
+          window.scrollTo({ top: offsetTop, behavior: "smooth" });
+        } else if (section === "business" && businessCard) {
+          const rect = businessCard.getBoundingClientRect();
+          const offsetTop = window.scrollY + rect.top - 80;
+          window.scrollTo({ top: offsetTop, behavior: "smooth" });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

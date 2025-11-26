@@ -26,10 +26,10 @@
 
     .card {
       width: 100%;
-      max-width: 420px;
+      max-width: 440px;
       background: rgba(15, 23, 42, 0.97);
       border-radius: 24px;
-      padding: 24px 24px 20px;
+      padding: 24px 24px 22px;
       box-shadow:
         0 20px 40px rgba(15, 23, 42, 0.9),
         0 0 24px rgba(56, 189, 248, 0.5);
@@ -135,7 +135,7 @@
     p.subtitle {
       font-size: 14px;
       color: #9ca3af;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     label {
@@ -164,7 +164,6 @@
       background: #020713;
     }
 
-    /* Password con ver/ocultar */
     .password-group {
       position: relative;
     }
@@ -190,37 +189,6 @@
       color: #e5e7eb;
     }
 
-    .actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 4px;
-      margin-bottom: 8px;
-      font-size: 12px;
-      color: #9ca3af;
-    }
-
-    .actions a {
-      color: #60a5fa;
-      text-decoration: none;
-    }
-
-    .actions a:hover {
-      text-decoration: underline;
-    }
-
-    .error-message {
-      font-size: 12px;
-      color: #fca5a5;
-      background: rgba(127, 29, 29, 0.3);
-      border: 1px solid rgba(248, 113, 113, 0.7);
-      padding: 6px 10px;
-      border-radius: 999px;
-      text-align: center;
-      margin-bottom: 12px;
-      display: none;
-    }
-
     .btn-primary {
       width: 100%;
       padding: 10px 16px;
@@ -235,6 +203,7 @@
         0 8px 26px rgba(37, 99, 235, 0.8),
         0 0 18px rgba(56, 189, 248, 0.7);
       transition: transform 0.15s ease, box-shadow 0.15s ease;
+      margin-top: 4px;
       margin-bottom: 10px;
     }
 
@@ -258,6 +227,25 @@
     }
 
     .switch-auth a:hover {
+      text-decoration: underline;
+    }
+
+    .helper-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: -4px;
+      margin-bottom: 10px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .helper-row a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+
+    .helper-row a:hover {
       text-decoration: underline;
     }
   </style>
@@ -300,7 +288,7 @@
 
     <h1 data-i18n="title">Iniciar sesión</h1>
     <p class="subtitle" data-i18n="subtitle">
-      Accede a tu cuenta para gestionar reservas y recordatorios.
+      Ingresa con tu correo y contraseña para continuar.
     </p>
 
     <form id="loginForm">
@@ -313,42 +301,36 @@
         <button type="button" class="toggle-password" data-target="password">👁</button>
       </div>
 
-      <div class="actions">
+      <div class="helper-row">
         <span></span>
         <a href="#" data-i18n="forgot">¿Olvidaste tu contraseña?</a>
       </div>
 
-      <!-- Mensaje de error en rojo -->
-      <p id="errorMessage" class="error-message"></p>
-
-      <button type="submit" class="btn-primary" data-i18n="submit_btn">Entrar</button>
+      <button type="submit" class="btn-primary" data-i18n="submit_btn">Ingresar</button>
     </form>
 
     <p class="switch-auth">
-      <span data-i18n="switch_text">¿Aún no tienes cuenta?</span>
+      <span data-i18n="switch_text">¿No tienes cuenta todavía?</span>
       <a href="register.html" data-i18n="switch_link">Crear cuenta</a>
     </p>
   </div>
 
   <script>
+    // ==== CONFIG BACKEND ====
     const API_BASE = "https://turnity-backend.onrender.com";
 
-    // Traducciones (incluye mensajes de error)
+    // ==== Traducciones ====
     const translations = {
       es: {
         back_home: "← Volver a inicio",
         title: "Iniciar sesión",
-        subtitle: "Accede a tu cuenta para gestionar reservas y recordatorios.",
+        subtitle: "Ingresa con tu correo y contraseña para continuar.",
         email_label: "Correo electrónico",
         password_label: "Contraseña",
-        forgot: "¿Olvidaste tu contraseña?",
-        submit_btn: "Entrar",
-        switch_text: "¿Aún no tienes cuenta?",
+        submit_btn: "Ingresar",
+        switch_text: "¿No tienes cuenta todavía?",
         switch_link: "Crear cuenta",
-        error_incorrect_password: "Contraseña incorrecta.",
-        error_user_not_found: "Usuario no existe.",
-        error_generic: "Error al iniciar sesión.",
-        error_connection: "No se pudo conectar con el servidor de Turnity.",
+        forgot: "¿Olvidaste tu contraseña?",
         placeholders: {
           email: "tucorreo@ejemplo.com",
           password: "••••••••",
@@ -357,17 +339,13 @@
       en: {
         back_home: "← Back to home",
         title: "Log in",
-        subtitle: "Access your account to manage bookings and reminders.",
+        subtitle: "Enter your email and password to continue.",
         email_label: "Email",
         password_label: "Password",
-        forgot: "Forgot your password?",
         submit_btn: "Log in",
-        switch_text: "Don't have an account?",
+        switch_text: "Don’t have an account yet?",
         switch_link: "Create account",
-        error_incorrect_password: "Incorrect password.",
-        error_user_not_found: "User does not exist.",
-        error_generic: "Error while logging in.",
-        error_connection: "Could not connect to Turnity server.",
+        forgot: "Forgot your password?",
         placeholders: {
           email: "you@example.com",
           password: "Your password",
@@ -376,17 +354,13 @@
       pt: {
         back_home: "← Voltar ao início",
         title: "Entrar",
-        subtitle: "Acesse sua conta para gerenciar reservas e lembretes.",
+        subtitle: "Digite seu e-mail e senha para continuar.",
         email_label: "E-mail",
         password_label: "Senha",
-        forgot: "Esqueceu sua senha?",
         submit_btn: "Entrar",
         switch_text: "Ainda não tem uma conta?",
         switch_link: "Criar conta",
-        error_incorrect_password: "Senha incorreta.",
-        error_user_not_found: "Usuário não existe.",
-        error_generic: "Erro ao entrar.",
-        error_connection: "Não foi possível conectar ao servidor da Turnity.",
+        forgot: "Esqueceu sua senha?",
         placeholders: {
           email: "voce@exemplo.com",
           password: "Sua senha",
@@ -395,17 +369,13 @@
       fr: {
         back_home: "← Retour à l’accueil",
         title: "Se connecter",
-        subtitle: "Accédez à votre compte pour gérer vos réservations et rappels.",
+        subtitle: "Entrez votre e-mail et votre mot de passe pour continuer.",
         email_label: "E-mail",
         password_label: "Mot de passe",
-        forgot: "Mot de passe oublié ?",
         submit_btn: "Se connecter",
         switch_text: "Vous n’avez pas encore de compte ?",
         switch_link: "Créer un compte",
-        error_incorrect_password: "Mot de passe incorrect.",
-        error_user_not_found: "L’utilisateur n’existe pas.",
-        error_generic: "Erreur lors de la connexion.",
-        error_connection: "Impossible de se connecter au serveur Turnity.",
+        forgot: "Mot de passe oublié ?",
         placeholders: {
           email: "vous@exemple.com",
           password: "Votre mot de passe",
@@ -414,17 +384,13 @@
       de: {
         back_home: "← Zur Startseite",
         title: "Anmelden",
-        subtitle: "Greife auf dein Konto zu, um Termine und Erinnerungen zu verwalten.",
+        subtitle: "Gib deine E-Mail und dein Passwort ein, um fortzufahren.",
         email_label: "E-Mail",
         password_label: "Passwort",
-        forgot: "Passwort vergessen?",
         submit_btn: "Anmelden",
-        switch_text: "Noch kein Konto?",
+        switch_text: "Du hast noch kein Konto?",
         switch_link: "Konto erstellen",
-        error_incorrect_password: "Falsches Passwort.",
-        error_user_not_found: "Benutzer existiert nicht.",
-        error_generic: "Fehler bei der Anmeldung.",
-        error_connection: "Verbindung zum Turnity-Server konnte nicht hergestellt werden.",
+        forgot: "Passwort vergessen?",
         placeholders: {
           email: "du@example.com",
           password: "Dein Passwort",
@@ -443,8 +409,9 @@
         if (t[key]) el.textContent = t[key];
       });
 
-      document.getElementById("email").placeholder = t.placeholders.email;
-      document.getElementById("password").placeholder = t.placeholders.password;
+      const ph = t.placeholders;
+      document.getElementById("email").placeholder = ph.email;
+      document.getElementById("password").placeholder = ph.password;
     }
 
     // Idiomas
@@ -456,6 +423,9 @@
         applyLanguage(btn.dataset.lang);
       });
     });
+
+    // Idioma inicial
+    applyLanguage("es");
 
     // Ver / ocultar contraseña
     document.querySelectorAll(".toggle-password").forEach((btn) => {
@@ -470,15 +440,9 @@
       });
     });
 
-    applyLanguage("es");
-
     // ====== ENVIAR LOGIN AL BACKEND ======
     document.getElementById("loginForm").addEventListener("submit", async function (e) {
       e.preventDefault();
-
-      const errorEl = document.getElementById("errorMessage");
-      errorEl.style.display = "none";
-      errorEl.textContent = "";
 
       const data = {
         email: document.getElementById("email").value.trim(),
@@ -488,52 +452,49 @@
       try {
         const response = await fetch(`${API_BASE}/api/auth/login`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
 
         const result = await response.json();
-        const t = translations[currentLang] || translations.es;
 
         if (!response.ok) {
-          let msg = result.message;
-
-          if (response.status === 404) {
-            msg = t.error_user_not_found;
-          } else if (response.status === 401) {
-            msg = t.error_incorrect_password;
-          }
-
-          if (!msg) {
-            msg = t.error_generic;
-          }
-
-          errorEl.textContent = msg;
-          errorEl.style.display = "block";
+          alert(result.message || "Error al iniciar sesión.");
           return;
         }
 
         // Guardar token y datos básicos
         if (result.token) {
           localStorage.setItem("turnity_token", result.token);
-          localStorage.setItem("turnity_user_role", result.user.role);
-          localStorage.setItem("turnity_user_name", result.user.name);
         }
 
-        // Redirigir según rol
-        if (result.user.role === "negocio") {
+        if (result.user) {
+          // Guardamos rol, nombre, email para compatibilidad
+          localStorage.setItem("turnity_user_role", result.user.role || "");
+          localStorage.setItem("turnity_user_name", result.user.name || "");
+          localStorage.setItem("turnity_user_email", result.user.email || "");
+
+          // Guardamos el país (para monedas, etc.)
+          if (result.user.country) {
+            localStorage.setItem("turnity_country", result.user.country);
+          }
+
+          // Guardamos TODO el usuario en un solo objeto
+          localStorage.setItem("turnityUser", JSON.stringify(result.user));
+        }
+
+        // 🚀 Redirección según rol
+        const role = result.user?.role;
+        if (role === "negocio") {
           window.location.href = "negocio-dashboard.html";
+        } else if (role === "trabajador") {
+          window.location.href = "trabajador-dashboard.html";
         } else {
           window.location.href = "usuario-dashboard.html";
         }
       } catch (err) {
         console.error("Error en login:", err);
-        const t = translations[currentLang] || translations.es;
-        const errorEl = document.getElementById("errorMessage");
-        errorEl.textContent = t.error_connection;
-        errorEl.style.display = "block";
+        alert("No se pudo conectar con el servidor de Turnity.");
       }
     });
   </script>
